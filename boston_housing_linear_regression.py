@@ -4,6 +4,8 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+
 
 
 
@@ -35,6 +37,7 @@ print("ds_boston['data'].shape : ",X.shape)
 df_boston = pd.DataFrame (X , columns = ds_boston["feature_names"] )
 df_boston['MEDV'] = y 
 print(df_boston.head())
+
 
 def plots():
     # pairplot
@@ -103,15 +106,51 @@ def plots():
     plt.title("log10('CRIM') vs MEDV")
     plt.show()
 
+def all_training():
+    reg = LinearRegression().fit(X, y) # same with LinearRegression(normalize="True")
+    print("score : {:.2f} (1 is the best)".format(reg.score(X, y)))
 
+    # reg = LinearRegression(normalize="True").fit(X, y)
+    # print(reg.score(X, y))
+
+    #print("reg.coef_ : ",reg.coef_)
+    print("reg.predict(X[0,:])  / y[0] : " , reg.predict([X[0,:]]) / y[0])
+    print("reg.predict(X[1,:])  / y[1] : " , reg.predict([X[1,:]]) / y[1])
+    print("reg.predict(X[2,:])  / y[2] : " , reg.predict([X[2,:]]) / y[2])
+
+
+def train_test():
+    # random_state=42 => to get same result every run , you can pick other number
+    X_train, X_test, y_train, y_test = train_test_split(X, y,random_state=42)
+    reg = LinearRegression().fit(X_train, y_train) 
+    print("score train : {:.2f} (1 is the best)".format(reg.score(X_train, y_train)))
+    print("score test : {:.2f} (1 is the best)".format(reg.score(X_test, y_test)))
+
+def learning_curves():
+    # random_state=42 => to get same result every run , you can pick other number
+    train_score_lc = []
+    test_score_lc = []
+    i_lc =[]
+    step = 5
+    i = step
+    while i < y.size:
+        X_lc = X[:i,]
+        y_lc = y[:i]
+        X_train, X_test, y_train, y_test = train_test_split(X_lc,y_lc ,random_state=42)
+        reg = LinearRegression().fit(X_train, y_train) 
+        train_score_lc.append(reg.score(X_train, y_train))
+        test_score_lc.append(reg.score(X_test, y_test))
+        i_lc.append(i)
+        i += step
+
+
+    plt.plot(i_lc,train_score_lc,'red',i_lc,test_score_lc,'green')
+    plt.title('learning curves : score (1 is best) train - red , test - green')
+    plt.xlabel('data set points')
+    plt.ylabel('score')
+    plt.ylim((0, 1))
+    plt.show()
 # plots()
-reg = LinearRegression().fit(X, y) # same with LinearRegression(normalize="True")
-print("score : {:.2f} (1 is the best)".format(reg.score(X, y)))
-
-# reg = LinearRegression(normalize="True").fit(X, y)
-# print(reg.score(X, y))
-
-#print("reg.coef_ : ",reg.coef_)
-print("reg.predict(X[0,:])  / y[0] : " , reg.predict([X[0,:]]) / y[0])
-print("reg.predict(X[1,:])  / y[1] : " , reg.predict([X[1,:]]) / y[1])
-print("reg.predict(X[2,:])  / y[2] : " , reg.predict([X[2,:]]) / y[2])
+#all_training()
+#train_test()
+learning_curves()
