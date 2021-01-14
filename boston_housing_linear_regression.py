@@ -4,8 +4,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-
+from sklearn.model_selection import train_test_split , learning_curve
 
 
 
@@ -121,11 +120,11 @@ def all_training():
     print("******** all_training")
     reg = LinearRegression().fit(X, y) # same with LinearRegression(normalize="True")
     print("score : {:.2f} (1 is the best)".format(reg.score(X, y)))
+    print("reg.coef_ : ",reg.coef_)
 
     # reg = LinearRegression(normalize="True").fit(X, y)
     # print(reg.score(X, y))
 
-    #print("reg.coef_ : ",reg.coef_)
     print("reg.predict(X[0,:])  / y[0] : " , reg.predict([X[0,:]]) / y[0])
     print("reg.predict(X[1,:])  / y[1] : " , reg.predict([X[1,:]]) / y[1])
     print("reg.predict(X[2,:])  / y[2] : " , reg.predict([X[2,:]]) / y[2])
@@ -139,7 +138,7 @@ def train_test():
     print("score train : {:.2f} (1 is the best)".format(reg.score(X_train, y_train)))
     print("score test : {:.2f} (1 is the best)".format(reg.score(X_test, y_test)))
 
-def learning_curves():
+def my_learning_curves():
     # random_state=42 => to get same result every run , you can pick other number
     train_score_lc = []
     test_score_lc = []
@@ -168,4 +167,6 @@ def learning_curves():
 plots()
 all_training()
 train_test()
-learning_curves()
+my_learning_curves()
+
+# understand this !!!! train_sizes, train_scores, valid_scores = learning_curve( LinearRegression(), X, y)
