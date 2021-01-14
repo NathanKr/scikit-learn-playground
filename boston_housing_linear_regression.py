@@ -161,7 +161,7 @@ def learning_curves():
     plt.title('learning curves : score (1 is best) train - red , test - green')
     plt.xlabel('data set points')
     plt.ylabel('score')
-    plt.ylim((0, 1))
+    plt.ylim((0, 1)) # i did this to remove huge numbers , but why does it happens
     plt.show()
 
 
