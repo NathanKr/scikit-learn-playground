@@ -44,69 +44,81 @@ def plots():
     # takes too long and what is shown is not clear sns.pairplot(df_boston) 
     #plt.show()
 
-    plt.plot(df_boston["LSTAT"],y,'o')
-    plt.title("LSTAT vs MEDV")
+    fig, axs = plt.subplots(2,2)
+    axLSTAT = axs[0,0]
+    axB  = axs[1,0]
+    axNOX = axs[0,1]
+    axCHAS = axs[1,1]
+
+
+    fig.suptitle('features vs output - MEDV')
+    axLSTAT.plot(df_boston["LSTAT"],y,'.')
+    axLSTAT.set_title("percentage lower status of the population - LSTAT")
+
+    axB.plot(df_boston["B"],y,'.')
+    axB.set_title("proportion of blacks by town - B")
+
+    axNOX.plot(df_boston["NOX"],y,'.')
+    axNOX.set_title("nitric oxides concentration (parts per 10 million) - NOX")
+
+
+    axCHAS.plot(df_boston["CHAS"],y,'.')
+    axCHAS.set_title(" Charles River dummy variable - CHAS")
     plt.show()
 
-    plt.plot(df_boston["B"],y,'o')
-    plt.title("B vs MEDV")
-    plt.show()
+    fig, axs = plt.subplots(2,2)
+    fig.suptitle('features vs output - MEDV')
+
+    axPTRATIO = axs[0,0]
+    axTAX = axs[0,1]
+    axRAD = axs[1,0]
+    axDIS = axs[1,1]
+
+    axPTRATIO.plot(df_boston["PTRATIO"],y,'.')
+    axPTRATIO.set_title("pupil-teacher ratio by town - PTRATIO")
+
+    axTAX.plot(df_boston["TAX"],y,'.')
+    axTAX.set_title("full-value property-tax rate per $10,000 - TAX")
+
+    axRAD.plot(df_boston["RAD"],y,'.')
+    axRAD.set_title("index of accessibility to radial highways - RAD")
 
 
-    # how can i control the width
-    # sns.barplot(x="PTRATIO", y="MEDV", data=df_boston)
-    # plt.show()
-
-
-    plt.plot(df_boston["PTRATIO"],y,'o')
-    plt.title("PTRATIO vs MEDV")
-    plt.show()
-
-    plt.plot(df_boston["TAX"],y,'o')
-    plt.title("TAX vs MEDV")
-    plt.show()
-
-    plt.plot(df_boston["RAD"],y,'o')
-    plt.title("RAD vs MEDV")
-    plt.show()
-
-
-    plt.plot(df_boston["DIS"],y,'o')
-    plt.title("DIS vs MEDV")
-    plt.show()
-
-    plt.plot(df_boston["AGE"],y,'o')
-    plt.title("AGE vs MEDV")
-    plt.show()
-
-    plt.plot(df_boston["RM"],y,'o')
-    plt.title("RM vs MEDV")
-    plt.show()
-
-    plt.plot(df_boston["NOX"],y,'o')
-    plt.title("NOX vs MEDV")
-    plt.show()
-
-
-    plt.plot(df_boston["CHAS"],y,'o')
-    plt.title("CHAS vs MEDV")
+    axDIS.plot(df_boston["DIS"],y,'.')
+    axDIS.set_title("weighted distances to five Boston employment centres - DIS")
     plt.show()
 
 
-    plt.plot(df_boston["INDUS"],y,'o')
-    plt.title("INDUS vs MEDV")
+    fig, axs = plt.subplots(2,2)
+    fig.suptitle('features vs output - MEDV')
+    
+    axAGE = axs[0,0]
+    axINDUS = axs[0,1]
+    axCRIM= axs[1,0]
+    axRM = axs[1,1]
+
+    axAGE.plot(df_boston["AGE"],y,'.')
+    axAGE.set_title("proportion of owner-occupied units built prior to 1940 - AGE")
+
+    axRM.plot(df_boston["RM"],y,'.')
+    axRM.set_title("average number of rooms per dwelling - RM")
+
+    axINDUS.plot(df_boston["INDUS"],y,'.')
+    axINDUS.set_title("proportion of non-retail business acres per town. - INDUS")
+
+    
+    axCRIM.plot(np.log10(df_boston["CRIM"]),y,'.')
+    axCRIM.set_title("per capita crime rate by town log10('CRIM')")
     plt.show()
 
 
-    plt.plot(df_boston["ZN"],y,'o')
-    plt.title("ZN vs MEDV -> what is it , why so much on 0 ?????")
+    plt.plot(df_boston["ZN"],y,'.')
+    plt.title("proportion of residential land zoned for lots over 25,000 sq.ft - ZN")
     plt.show()
 
-    plt.plot(np.log10(df_boston["CRIM"]),y,'o')
-    plt.title("log10('CRIM') vs MEDV")
-    plt.show()
 
 def all_training():
+    print("******** all_training")
     reg = LinearRegression().fit(X, y) # same with LinearRegression(normalize="True")
     print("score : {:.2f} (1 is the best)".format(reg.score(X, y)))
 
@@ -120,6 +132,7 @@ def all_training():
 
 
 def train_test():
+    print("******** train_test")
     # random_state=42 => to get same result every run , you can pick other number
     X_train, X_test, y_train, y_test = train_test_split(X, y,random_state=42)
     reg = LinearRegression().fit(X_train, y_train) 
@@ -150,7 +163,9 @@ def learning_curves():
     plt.ylabel('score')
     plt.ylim((0, 1))
     plt.show()
-# plots()
-#all_training()
-#train_test()
+
+
+plots()
+all_training()
+train_test()
 learning_curves()
