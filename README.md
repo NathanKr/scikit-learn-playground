@@ -18,6 +18,7 @@ python code to do basicscikit-learn
     <li>some of the points on the learning curves are very negative so i had to use plt.ylim . whats the reason for this ?</li>
     <li>what data cleaning \ pre processing can be used to improve the model ?</li>
     <li>why do i get noisy learning curve - in particular the one for test ?</li>
+    <li>use the learning_curve function from sklearn.model_selection</li>
     </ul>
     </ul>
     </td>
