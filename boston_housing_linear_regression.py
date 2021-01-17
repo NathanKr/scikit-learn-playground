@@ -35,7 +35,10 @@ y = ds_boston["target"]
 print("ds_boston['data'].shape : ",X.shape)
 df_boston = pd.DataFrame (X , columns = ds_boston["feature_names"] )
 df_boston['MEDV'] = y 
-print(df_boston.head())
+print("df_boston.head() : \n",df_boston.head())
+print("df_boston.corr() : \n",df_boston.corr())
+
+
 
 
 def plots():
