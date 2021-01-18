@@ -46,6 +46,10 @@ def plots():
     # takes too long and what is shown is not clear sns.pairplot(df_boston) 
     #plt.show()
 
+    sns.heatmap(df_boston.corr(), annot=True)
+    # RM and LSTAT have |correlation| >= 0.7 with the output MEDV , and it make sense
+    plt.show()
+
     fig, axs = plt.subplots(2,2)
     axLSTAT = axs[0,0]
     axB  = axs[1,0]
