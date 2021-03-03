@@ -27,7 +27,7 @@ python code to do basicscikit-learn
     <td>pre_processing.py</td>
     <td>
     <ul>
-    <li>make mean zero and scale features according to (x - u) / s where u is the mean and s is standard deviation</li>
+    <li>Standardize features by removing the mean and scaling to unit variance according to (x - u) / s where u is the mean and s is standard deviation</li>
     </ul>
     </ul>
     </td>
